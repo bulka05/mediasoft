@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+    app:
+      container_name: 'quizzical_aryabhata'
+      image: 'myorg/app_stock'
+      build: ./
+      ports:
+        - "8085:8085"
+      depends_on:
+        - 'pg_db'
+    pg_db:
+      image: 'postgres:latest'  # Изменил тег образа на latest
+      container_name: 'postgres'
+      restart: 'always'
+      environment:
+        - POSTGRES_PASSWORD=12345
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=stock_db
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+        - '5432:5432'
+
+volumes:
+    postgres_data:

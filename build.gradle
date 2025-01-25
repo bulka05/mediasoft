@@ -12,11 +12,22 @@ java {
     sourceCompatibility = '17'
 }
 
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'ru.stock.StockApplication'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
+
 
 repositories {
     mavenCentral()
@@ -27,21 +38,48 @@ ext {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     annotationProcessor 'org.projectlombok:lombok'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+    implementation 'org.flywaydb:flyway-core'
+    implementation group: 'org.flywaydb', name: 'flyway-maven-plugin', version: '10.10.0'
+
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
+
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.11.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.11.0'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '3.2.4'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.2'
 }
 
 tasks.named('test') {
-    outputs.dir snippetsDir
+    useJUnit()
     useJUnitPlatform()
+
 }
 
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
 }
+
+def void useJUnitPlatform() {}
+
+def void include(String s) {}
+
+def void useJUnit() {}

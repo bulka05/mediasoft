@@ -1,0 +1,60 @@
+server:
+  port: ${PORT_TO_EXPOSE:8085}
+
+spring:
+  flyway:
+    enabled: false
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      show_sql: true
+      format_sql: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stock_db
+    username: postgres
+    password: 12345
+    driver-class-name: org.postgresql.Driver
+
+  application:
+    name: stock
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+
+  jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      platform: postgres
+  database:
+    host: localhost
+    port: 5432
+    name: stock_db
+    users:
+      - name: postgres
+        password: 12345
+        permissions:
+          - CONNECT
+          - SELECT
+          - INSERT
+          - UPDATE
+          - DELETE
+      - name: second_postgres
+        password: 12345
+        permissions:
+          - CONNECT
+          - SELECT
+          - INSERT
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /v3/api-docs
+
+

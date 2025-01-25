@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "spring.springfox.documentation.swagger-ui.enabled",
+      "type": "java.lang.String",
+      "description": "Description for spring.springfox.documentation.swagger-ui.enabled."
+    },
+    {
+      "name": "spring.flyway.jpa.show-sql",
+      "type": "java.lang.String",
+      "description": "Description for spring.flyway.jpa.show-sql."
+    },
+    {
+      "name": "spring.flyway.datasource.url",
+      "type": "java.lang.String",
+      "description": "Description for spring.flyway.datasource.url."
+    },
+    {
+      "name": "spring.hibernate.show_sql",
+      "type": "java.lang.String",
+      "description": "Description for spring.hibernate.show_sql."
+    }
+  ] }
